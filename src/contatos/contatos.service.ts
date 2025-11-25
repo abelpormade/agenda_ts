@@ -4,18 +4,59 @@ import { Repository } from 'typeorm';
 import { Contato } from './contato.entity';
 import { CreateContatoDto } from './dto/create-contato.dto';
 import { UpdateContatoDto } from './dto/update-contato.dto';
+import { Usuario } from 'src/usuarios/usuario.entity';
+import { Empresa } from 'src/empresas/empresa.entity'
 
 @Injectable()
 export class ContatosService {
   constructor(
     @InjectRepository(Contato)
     private readonly contatoRepository: Repository<Contato>,
+
+
+  @InjectRepository(Usuario)
+  private readonly usuarioRepository: Repository<Usuario>,
+
+  @InjectRepository(Empresa)
+  private readonly empresaRepository: Repository<Empresa>,
+  
+  
+  
   ) {}
 
-  create(createContatoDto: CreateContatoDto) {
-    const novo = this.contatoRepository.create(createContatoDto);
-    return this.contatoRepository.save(novo);
+  async create(dto: CreateContatoDto) {
+
+    const usuarioId = await this.usuarioRepository.findOne({
+      where: { id_usuario: dto.usuario_Id },
+    });
+    if (!usuarioId ) {
+      throw new NotFoundException(`Ùsuario com o ID ${dto.usuario_Id} não existe`);
+    }
+    
+    const empresa = await this.empresaRepository.findOne({
+    where: { id_empresa: dto.empresa_Id },
+  });
+
+  if (!empresa) {
+    throw new NotFoundException(`Empresa com ID ${dto.empresa_Id} não existe`);
   }
+
+
+  const contato = this.contatoRepository.create({
+    nome: dto.nome,
+    email: dto.email,
+    telefone: dto.telefone,
+    cargo: dto.cargo,
+    observacoes: dto.observacoes,
+
+    usuario_Id: dto.usuario_Id,
+    empresa_Id: dto.empresa_Id,
+
+  });
+
+  return await this.contatoRepository.save(contato);
+}
+
 
   async findAll() {
   const todasEmpresas = await this.contatoRepository.find();

@@ -20,6 +20,8 @@ export class Atividade {
   })
   @JoinColumn({ name: 'id_contato' })
   contato: Contato;
+  @Column({ name: 'id_contato', nullable: true, update: false })
+id_contato:number;
 
   @Column({ length: 100 })
   titulo: string;
@@ -36,6 +38,7 @@ export class Atividade {
   @Column({
     type: 'enum',
     enum: ['baixa', 'media', 'alta'],
+    enumName: 'prioridade_enum',
     default: 'media',
   })
   prioridade: 'baixa' | 'media' | 'alta';
@@ -46,16 +49,15 @@ export class Atividade {
   @Column({ type: 'timestamp', nullable: true })
   data_notificacao: Date;
 
+  @Column({ type: 'timestamp', nullable: true })
+  data_atualizacao: Date;
+
   @Column({
     type: 'enum',
     enum: ['pendente', 'concluida'],
+    enumName: 'status_enum',
     default: 'pendente',
   })
   status: 'pendente' | 'concluida';
 
-  @CreateDateColumn({ name: 'criado_em' })
-  criado_em: Date;
-
-  @UpdateDateColumn({ name: 'atualizado_em' })
-  atualizado_em: Date;
 }
