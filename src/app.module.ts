@@ -4,6 +4,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { EmpresasModule } from './empresas/empresas.module';
 import { ContatosModule } from './contatos/contatos.module';
 import { AtividadesModule } from './atividades/atividades.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AtividadesModule } from './atividades/atividades.module';
       synchronize: true,
       logging: true,
     }),
+    AuthModule,
     UsuariosModule,
     EmpresasModule,
     ContatosModule,
