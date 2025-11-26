@@ -5,9 +5,18 @@ import { EmpresasModule } from './empresas/empresas.module';
 import { ContatosModule } from './contatos/contatos.module';
 import { AtividadesModule } from './atividades/atividades.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
+
 
 @Module({
   imports: [
+    JwtModule.register({
+      global: true,
+       secret: process.env.JWT_SECRET || 'sua_chave_secreta_super_segura_aqui',
+
+      signOptions: { expiresIn: '24h' },
+    }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
