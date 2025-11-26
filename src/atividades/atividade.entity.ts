@@ -3,11 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
-import { Contato } from 'src/contatos/contato.entity';
+import { Contato } from '../contatos/contato.entity';
 
 @Entity('atividades')
 export class Atividade {
