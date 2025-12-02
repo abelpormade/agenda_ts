@@ -27,6 +27,9 @@ export class Contato {
   @Column({ length: 100 })
   cargo: string;
 
+  @Column({ length: 100,nullable:true })
+  setor: string;
+
   @Column({ type: 'text', nullable: true })
   observacoes: string;
 

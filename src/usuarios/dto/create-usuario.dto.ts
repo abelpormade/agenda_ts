@@ -14,7 +14,7 @@ export class CreateUsuarioDto {
   email: string;
 
 
-  @ApiProperty({ example: '*********' })
+  @ApiProperty({ example: '*********',description:'vc sabe o que é uma senha' })
   @IsString()
   @MinLength(6, {message: 'a Senha deve ter no mínimo 6 caracteres'})
   senha: string;

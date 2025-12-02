@@ -15,7 +15,7 @@ export class CreateEmpresaDto {
 
   @ApiProperty({example:"Arquitetura"})
   @IsString()
-  setor_atuacao: string;
+  ramo_atuacao: string;
 
   @ApiProperty({example:"42999455387"})
   @IsString()

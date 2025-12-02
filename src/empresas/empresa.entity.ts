@@ -13,7 +13,7 @@ export class Empresa {
   endereco: string;
 
   @Column({ length: 100 })
-  setor_atuacao: string;
+  ramo_atuacao: string;
 
   @Column({ length: 20 })
   telefone: string;

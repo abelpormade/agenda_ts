@@ -27,8 +27,8 @@ export class UsuariosController {
   }
 
   @Get()
-  @UseGuards(JwtGuard)
-  @ApiBearerAuth()
+  //@UseGuards(JwtGuard)
+  //@ApiBearerAuth()
   @ApiOperation({ summary: 'Listar todos os usuários (autenticado)' })
   findAll() {
     return this.usuariosService.findAll();
