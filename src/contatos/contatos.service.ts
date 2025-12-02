@@ -48,7 +48,7 @@ export class ContatosService {
     telefone: dto.telefone,
     cargo: dto.cargo,
     observacoes: dto.observacoes,
-
+    setor:dto.setor,
     usuario_Id: dto.usuario_Id,
     empresa_Id: dto.empresa_Id,
 
@@ -59,7 +59,10 @@ export class ContatosService {
 
 
   async findAll() {
-  const todasEmpresas = await this.contatoRepository.find();
+  const todasEmpresas = await this.contatoRepository.createQueryBuilder('contato')
+    .leftJoin('contato.empresa', 'empresa')
+    .addSelect(['empresa.nome'])
+    .getMany();
 
   if (!todasEmpresas || todasEmpresas.length === 0) {
     throw new NotFoundException('Nenhuma empresa encontrada');
@@ -68,12 +71,14 @@ export class ContatosService {
   return todasEmpresas;
 }
 
-  findOne(id: number) {
-    return this.contatoRepository.findOne({
-      where: { id_contato: id },
-      relations: ['empresa'],
-    });
-  }
+ async findOne(id: number) {
+  return this.contatoRepository
+    .createQueryBuilder('contato')
+    .leftJoin('contato.empresa', 'empresa')
+    .addSelect(['empresa.nome'])
+    .where('contato.id_contato = :id', { id })
+    .getOne();
+}
 
   async update(id: number, updateContatoDto: UpdateContatoDto) {
     await this.contatoRepository.update(id, updateContatoDto);

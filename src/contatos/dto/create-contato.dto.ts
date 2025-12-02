@@ -24,6 +24,10 @@ export class CreateContatoDto {
     @IsNotEmpty()
     cargo: string;
 
+    @ApiProperty({example:"RH"})
+    @IsString()
+    setor: string;
+
     @ApiProperty({example:"entrar em contato diariamente"})
     @IsString()
     @IsNotEmpty()
