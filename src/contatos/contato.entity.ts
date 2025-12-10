@@ -4,7 +4,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { Usuario } from '../usuarios/usuario.entity';
 import { Empresa } from '../empresas/empresa.entity';
@@ -27,36 +27,31 @@ export class Contato {
   @Column({ length: 100 })
   cargo: string;
 
-  @Column({ length: 100,nullable:true })
+  @Column({ length: 100, nullable: true })
   setor: string;
 
   @Column({ type: 'text', nullable: true })
   observacoes: string;
 
-
-//relacionamento dza tabela contatos com a tabela usarios
+  //relacionamento dza tabela contatos com a tabela usarios
   @ManyToOne(() => Usuario, (usuario) => usuario.contatos, {
-  onDelete: 'CASCADE',
-})
-@JoinColumn({ name: 'usuario_Id' })
-usuario: Usuario;
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'usuario_Id' })
+  usuario: Usuario;
 
-@Column()
-usuario_Id: number;
-  
-//relacionamento da tabela contatos com a tabela empresas
+  @Column()
+  usuario_Id: number;
+
+  //relacionamento da tabela contatos com a tabela empresas
   @ManyToOne(() => Empresa, (empresa) => empresa.contatos, {
     onDelete: 'CASCADE',
   })
-
-  @JoinColumn({name:'empresa_Id'})
+  @JoinColumn({ name: 'empresa_Id' })
   empresa: Empresa;
 
   @Column()
-  empresa_Id:Number;
-
-
-  
+  empresa_Id: number;
 
   @OneToMany(() => Atividade, (atividade) => atividade.contato)
   atividades: Atividade[];
