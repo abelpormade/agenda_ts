@@ -7,10 +7,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { Usuario } from '../usuarios/usuario.entity';
 
 @Module({
-  imports: [
-    PassportModule,
-    TypeOrmModule.forFeature([Usuario]),
-  ],
+  imports: [PassportModule, TypeOrmModule.forFeature([Usuario])],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
   exports: [AuthService, JwtStrategy],

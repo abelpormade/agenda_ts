@@ -19,7 +19,7 @@ export class Atividade {
   @JoinColumn({ name: 'id_contato' })
   contato: Contato;
   @Column({ name: 'id_contato', nullable: true, update: false })
-id_contato:number;
+  id_contato: number;
 
   @Column({ length: 100 })
   titulo: string;
@@ -57,5 +57,4 @@ id_contato:number;
     default: 'pendente',
   })
   status: 'pendente' | 'concluida';
-
 }

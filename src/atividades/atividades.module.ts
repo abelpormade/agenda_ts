@@ -5,7 +5,7 @@ import { AtividadesService } from './atividades.service';
 import { AtividadesController } from './atividades.controller';
 import { Contato } from 'src/contatos/contato.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Atividade,Contato])],
+  imports: [TypeOrmModule.forFeature([Atividade, Contato])],
   controllers: [AtividadesController],
   providers: [AtividadesService],
   exports: [AtividadesService],

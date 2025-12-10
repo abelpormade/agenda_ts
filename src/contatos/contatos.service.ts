@@ -5,7 +5,7 @@ import { Contato } from './contato.entity';
 import { CreateContatoDto } from './dto/create-contato.dto';
 import { UpdateContatoDto } from './dto/update-contato.dto';
 import { Usuario } from 'src/usuarios/usuario.entity';
-import { Empresa } from 'src/empresas/empresa.entity'
+import { Empresa } from 'src/empresas/empresa.entity';
 
 @Injectable()
 export class ContatosService {
@@ -13,72 +13,69 @@ export class ContatosService {
     @InjectRepository(Contato)
     private readonly contatoRepository: Repository<Contato>,
 
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>,
 
-  @InjectRepository(Usuario)
-  private readonly usuarioRepository: Repository<Usuario>,
-
-  @InjectRepository(Empresa)
-  private readonly empresaRepository: Repository<Empresa>,
-  
-  
-  
+    @InjectRepository(Empresa)
+    private readonly empresaRepository: Repository<Empresa>,
   ) {}
 
   async create(dto: CreateContatoDto) {
-
     const usuarioId = await this.usuarioRepository.findOne({
       where: { id_usuario: dto.usuario_Id },
     });
-    if (!usuarioId ) {
-      throw new NotFoundException(`Ùsuario com o ID ${dto.usuario_Id} não existe`);
+    if (!usuarioId) {
+      throw new NotFoundException(
+        `Ùsuario com o ID ${dto.usuario_Id} não existe`,
+      );
     }
-    
+
     const empresa = await this.empresaRepository.findOne({
-    where: { id_empresa: dto.empresa_Id },
-  });
+      where: { id_empresa: dto.empresa_Id },
+    });
 
-  if (!empresa) {
-    throw new NotFoundException(`Empresa com ID ${dto.empresa_Id} não existe`);
+    if (!empresa) {
+      throw new NotFoundException(
+        `Empresa com ID ${dto.empresa_Id} não existe`,
+      );
+    }
+
+    const contato = this.contatoRepository.create({
+      nome: dto.nome,
+      email: dto.email,
+      telefone: dto.telefone,
+      cargo: dto.cargo,
+      observacoes: dto.observacoes,
+      setor: dto.setor,
+      usuario_Id: dto.usuario_Id,
+      empresa_Id: dto.empresa_Id,
+    });
+
+    return await this.contatoRepository.save(contato);
   }
-
-
-  const contato = this.contatoRepository.create({
-    nome: dto.nome,
-    email: dto.email,
-    telefone: dto.telefone,
-    cargo: dto.cargo,
-    observacoes: dto.observacoes,
-    setor:dto.setor,
-    usuario_Id: dto.usuario_Id,
-    empresa_Id: dto.empresa_Id,
-
-  });
-
-  return await this.contatoRepository.save(contato);
-}
-
 
   async findAll() {
-  const todasEmpresas = await this.contatoRepository.createQueryBuilder('contato')
-    .leftJoin('contato.empresa', 'empresa')
-    .addSelect(['empresa.nome'])
-    .getMany();
+    const todasEmpresas = await this.contatoRepository
+      .createQueryBuilder('contato')
+      .leftJoin('contato.empresa', 'empresa')
+      .addSelect(['empresa.nome'])
+      .getMany();
 
-  if (!todasEmpresas || todasEmpresas.length === 0) {
-    throw new NotFoundException('Nenhuma empresa encontrada');
+    if (!todasEmpresas || todasEmpresas.length === 0) {
+      throw new NotFoundException('Nenhuma empresa encontrada');
+    }
+
+    return todasEmpresas;
   }
 
-  return todasEmpresas;
-}
-
- async findOne(id: number) {
-  return this.contatoRepository
-    .createQueryBuilder('contato')
-    .leftJoin('contato.empresa', 'empresa')
-    .addSelect(['empresa.nome'])
-    .where('contato.id_contato = :id', { id })
-    .getOne();
-}
+  async findOne(id: number) {
+    return this.contatoRepository
+      .createQueryBuilder('contato')
+      .leftJoin('contato.empresa', 'empresa')
+      .addSelect(['empresa.nome'])
+      .where('contato.id_contato = :id', { id })
+      .getOne();
+  }
 
   async update(id: number, updateContatoDto: UpdateContatoDto) {
     await this.contatoRepository.update(id, updateContatoDto);
