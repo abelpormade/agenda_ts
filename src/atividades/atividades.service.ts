@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Atividade } from './atividade.entity';
 import { CreateAtividadeDto } from './dto/create-atividade.dto';
 import { UpdateAtividadeDto } from './dto/update-atividade.dto';
-import { Contato } from 'src/contatos/contato.entity';
+import { Contato } from '../contatos/contato.entity';
 
 @Injectable()
 export class AtividadesService {

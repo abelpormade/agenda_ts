@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Contato } from './contato.entity';
+import { Contato } from '../contatos/contato.entity';
 import { CreateContatoDto } from './dto/create-contato.dto';
 import { UpdateContatoDto } from './dto/update-contato.dto';
-import { Usuario } from 'src/usuarios/usuario.entity';
-import { Empresa } from 'src/empresas/empresa.entity';
+import { Usuario } from '../usuarios/usuario.entity';
+import { Empresa } from '../empresas/empresa.entity';
 
 @Injectable()
 export class ContatosService {
