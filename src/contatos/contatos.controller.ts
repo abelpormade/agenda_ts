@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ContatosService } from './contatos.service';
 import { CreateContatoDto } from './dto/create-contato.dto';
@@ -20,6 +21,10 @@ export class ContatosController {
     return this.contatosService.create(createContatoDto);
   }
 
+  @Get('filtro')
+  findByName(@Query('nome') nome: string) {
+    return this.contatosService.findByName(nome);
+  }
   @Get()
   findAll() {
     return this.contatosService.findAll();

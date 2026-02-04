@@ -6,6 +6,7 @@ import { CreateContatoDto } from './dto/create-contato.dto';
 import { UpdateContatoDto } from './dto/update-contato.dto';
 import { Usuario } from '../usuarios/usuario.entity';
 import { Empresa } from '../empresas/empresa.entity';
+import { ILike } from 'typeorm';
 
 @Injectable()
 export class ContatosService {
@@ -87,5 +88,21 @@ export class ContatosService {
     if (!contato) return { message: 'Contato não encontrado' };
     await this.contatoRepository.delete(id);
     return { message: 'Contato removido com sucesso' };
+  }
+
+  async findByName(nome: string) {
+    const nomeUsuario = await this.contatoRepository.findOne({
+      where: {
+        nome: ILike(`%${nome}%`),
+      },
+    });
+
+    if (!nomeUsuario) {
+      throw new NotFoundException(
+        `Nenhum contato encontrado com o nome ${nome}`,
+      );
+    }
+
+    return nomeUsuario;
   }
 }
