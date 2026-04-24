@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsuariosModule } from './usuarios/usuarios.module';
-import { EmpresasModule } from './empresas/empresas.module';
-import { ContatosModule } from './contatos/contatos.module';
-import { AtividadesModule } from './atividades/atividades.module';
-import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
+import { AtividadesModule } from './modules/atividades/atividades.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { ContatosModule } from './modules/contatos/contatos.module';
 
 @Module({
   imports: [
@@ -26,11 +25,10 @@ import { JwtModule } from '@nestjs/jwt';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
       synchronize: true,
-      logging: true,
+      logging: false,
     }),
     AuthModule,
     UsuariosModule,
-    EmpresasModule,
     ContatosModule,
     AtividadesModule,
   ],

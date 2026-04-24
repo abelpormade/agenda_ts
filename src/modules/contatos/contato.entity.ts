@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Usuario } from '../usuarios/usuario.entity';
 import { Empresa } from '../empresas/empresa.entity';
-import { Atividade } from '../atividades/atividade.entity';
+import { Atividade } from '../atividades/infra/entities/atividade.entity';
 
 @Entity('contatos')
 export class Contato {
@@ -26,6 +26,12 @@ export class Contato {
 
   @Column({ length: 100 })
   cargo: string;
+
+  @Column({ length: 100, nullable: true })
+  cnpj: string;
+
+  @Column({ length: 100, nullable: true })
+  nome_empresa: string;
 
   @Column({ length: 100, nullable: true })
   setor: string;

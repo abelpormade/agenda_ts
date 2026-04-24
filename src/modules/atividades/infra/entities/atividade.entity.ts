@@ -5,10 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Contato } from '../contatos/contato.entity';
+import { Contato } from '../../../contatos/contato.entity';
 
 @Entity('atividades')
-export class Atividade {
+export class AtividadesEntity {
   @PrimaryGeneratedColumn()
   id_atividade: number;
 

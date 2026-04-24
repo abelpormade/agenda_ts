@@ -1,20 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Atividade } from './atividade.entity';
-import { CreateAtividadeDto } from './dto/create-atividade.dto';
-import { UpdateAtividadeDto } from './dto/update-atividade.dto';
+import { AtividadesEntity} from './infra/entities/atividade.entity';
+
+import { UpdateAtividadeDto } from './models/dto/update-atividade.dto';
 import { Contato } from '../contatos/contato.entity';
+import { CreateAtividadeDto } from './models/dto/create-atividade.dto';
 
 @Injectable()
 export class AtividadesService {
   constructor(
-    @InjectRepository(Atividade)
-    private readonly atividadeRepository: Repository<Atividade>,
+    @InjectRepository(AtividadesEntity)
+    private readonly atividadeRepository: Repository<AtividadesEntity>,
 
     @InjectRepository(Contato)
     private readonly contatoRepository: Repository<Contato>,
-  ) {}
+  ) { }
 
   async create(createAtividadeDto: CreateAtividadeDto) {
     const contato = await this.contatoRepository.findOne({

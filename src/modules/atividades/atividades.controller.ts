@@ -8,12 +8,12 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AtividadesService } from './atividades.service';
-import { CreateAtividadeDto } from './dto/create-atividade.dto';
-import { UpdateAtividadeDto } from './dto/update-atividade.dto';
+import { UpdateAtividadeDto } from './models/dto/update-atividade.dto';
+import { CreateAtividadeDto } from './models/dto/create-atividade.dto';
 
 @Controller('atividades')
 export class AtividadesController {
-  constructor(private readonly atividadesService: AtividadesService) {}
+  constructor(private readonly atividadesService: AtividadesService) { }
 
   @Post()
   create(@Body() createAtividadeDto: CreateAtividadeDto) {

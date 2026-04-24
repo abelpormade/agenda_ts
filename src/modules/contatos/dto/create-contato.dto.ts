@@ -22,6 +22,14 @@ export class CreateContatoDto {
   @IsNotEmpty()
   cargo: string;
 
+  @ApiProperty({ example: '12345678000195' })
+  @IsString()
+  cnpj: string;
+
+  @ApiProperty({ example: 'Pormade' })
+  @IsString()
+  nome_empresa: string;
+
   @ApiProperty({ example: 'RH' })
   @IsString()
   setor: string;
